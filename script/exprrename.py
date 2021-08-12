@@ -1,9 +1,6 @@
-import sys
-import os
-from pathlib import Path, PurePath
+from pathlib import Path
 import re
 import shutil as su
-import pandas as pd
 
 def read_config():
     """Reads the config file in working directory, creates it from the default file or prints exeption.
