@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 import shutil as su
+from datetime import datetime
 
 def read_config():
     """Reads the config file in working directory, creates it from the default file or prints exeption.
@@ -129,6 +130,8 @@ def rename_files(file_list: list, output: tuple):
     namegr, subgr, gr_one, sep, gr_two = output
     #Name group: int, substraction group: int, Output format (group1: int, separator: str, group2: int)
 
+    log = []
+
     for file in file_list:
         subdir, file[namegr] = split_namegroup(file[namegr])
 
@@ -141,6 +144,12 @@ def rename_files(file_list: list, output: tuple):
         new_file_location = subdir_path.resolve() / (file[gr_one] + sep + file[gr_two] + file[3])
 
         su.move(current_file_location, new_file_location)
+
+        print("'" + current_file_location.name + "'\nwas moved to\n'" + new_file_location.parent.stem + "/" + new_file_location.name + "\n")
+
+        log.append("\t'" + current_file_location.name + "' was moved to '" + new_file_location.parent.stem + "/" + new_file_location.name)
+
+    Path("exprrename.log").write_text(datetime.now().strftime("%d.%m.%Y (%X)") + ":\n" + "\n".join(log))
 
 ############### Main ###############
 config, config_exists = read_config()
