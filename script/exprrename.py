@@ -106,8 +106,10 @@ def apply_rules(rule_dict: dict, file_list: list[list], namegr: int, subgr: int)
     """Applies rules from config file to filenames and numbers."""
     
     for i in range(len(file_list)):
-        file_list[i][subgr] -= rule_dict[file_list[i][namegr]][1] #substract substraction number from number
-        file_list[i][subgr] = str(file_list[i][subgr]).zfill(file_list[i][4])
+        if (len(file_list[i]) == 5):
+            file_list[i][subgr] -= rule_dict[file_list[i][namegr]][1] #substract substraction number from number
+            file_list[i][subgr] = str(file_list[i][subgr]).zfill(file_list[i][4])
+        
         file_list[i][namegr] = rule_dict[file_list[i][namegr]][0] #change filename to newname
 
 def split_namegroup(newname: str):
